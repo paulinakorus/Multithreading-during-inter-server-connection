@@ -1,5 +1,7 @@
 package org.example.service.model;
 
+import org.example.service.model.enums.Method;
+
 public class Payload {
     private Method method;
     private String argument;

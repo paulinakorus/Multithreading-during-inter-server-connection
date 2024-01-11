@@ -1,7 +1,7 @@
 package org.example.deliverer;
 
 import org.example.service.Server;
-import org.example.service.model.Method;
+import org.example.service.model.enums.Method;
 import org.example.service.model.Product;
 
 import java.util.List;

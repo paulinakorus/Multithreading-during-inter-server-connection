@@ -1,5 +1,7 @@
 package org.example.service.model;
 
+import org.example.service.model.enums.ProductStatus;
+
 public class Product {
     private Integer id;
     private String name;

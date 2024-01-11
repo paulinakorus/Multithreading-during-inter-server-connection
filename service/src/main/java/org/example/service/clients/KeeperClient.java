@@ -1,9 +1,9 @@
-package org.example.customer;
+package org.example.service.clients;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.service.Client;
 import org.example.service.model.*;
+import org.example.service.model.enums.Method;
 
 import java.io.IOException;
 import java.util.List;
@@ -73,5 +73,17 @@ public class KeeperClient extends Client {
         var user_result = objectMapper.readValue(result, User.class);
         System.out.println("Info about user: " + result);
         return user_result;
+    }
+
+    public List<Product> returnOrder(Product[] productTab) throws IOException {
+        data = objectMapper.writeValueAsString(productTab);
+        payload.setArgument(data);
+        payload.setMethod(Method.ReturnOrder);
+
+        payloadString = objectMapper.writeValueAsString(payload);
+        var result = this.sendAndRead(payloadString);
+        var productTab_result = objectMapper.readValue(result, Product[].class);
+        System.out.println("Returning order");
+        return List.of(productTab_result);
     }
 }

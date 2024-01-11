@@ -2,6 +2,8 @@ package org.example.keeper.service;
 
 import org.example.service.model.*;
 import org.example.service.Server;
+import org.example.service.model.enums.Method;
+import org.example.service.model.enums.ProductStatus;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +30,9 @@ public class KeeperServer extends Server {
                 case Unregister -> unregister((Integer) object);
                 case GetOffer -> getOffer();
                 case PutOrder -> putOrder((Order) object);
-                //case ReturnOrder -> returnOrder((List<Product>) object);
+                case ReturnOrder -> returnOrder((Product[]) object);
+                case GetInfo -> getInfo((Integer) object);
+                //case getOrder(); -> getOrder();
 
                 default -> throw new RuntimeException("Unexcepted method");
             };
@@ -86,7 +90,7 @@ public class KeeperServer extends Server {
         return wholeProductList;       //?
     }
 
-    private void getOrder(int delivererID){
+    private void getOrder(){
 
     }
 

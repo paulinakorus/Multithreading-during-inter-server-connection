@@ -2,6 +2,8 @@ package org.example.customer;
 
 import org.example.service.Server;
 import org.example.service.model.*;
+import org.example.service.model.enums.Method;
+import org.example.service.model.enums.ProductStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,8 @@ public class CustomerServer extends Server {
         try{
             Object obj = switch(method){
                 case Test -> test((Product) object);
+                case PutOrder -> putOrder((Order) object);
+                case ReturnReceipt -> returnReceipt((Receipt) object);
                 default -> throw new RuntimeException("Unexcepted method");
             };
             return objectMapper.writeValueAsString(obj);
@@ -26,9 +30,11 @@ public class CustomerServer extends Server {
         return product.getName();
     }
 
-    private List<Product> putOrder(Order userProducts){
-        List<Product> productList = new ArrayList<>();
-        return productList;
+    private Order putOrder(Order order){
+        for (Product product : order.getProductList()) {
+            product.setProductStatus(ProductStatus.Bought);
+        }
+        return order;//?
     }
 
     private Receipt returnReceipt(Receipt receipt){

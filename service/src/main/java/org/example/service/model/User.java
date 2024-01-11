@@ -1,5 +1,7 @@
 package org.example.service.model;
 
+import org.example.service.model.enums.Role;
+
 public class User {
     private String host;
     private Integer port;
