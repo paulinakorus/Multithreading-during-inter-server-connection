@@ -12,10 +12,6 @@ public class DelivererServer extends Server {
         return null;
     }
 
-    private String[] response(String type, String[] data){
-        return data;
-    }
-
     private List<Product> returnOrder(List<Product> productList){
         return productList;
     }

@@ -12,10 +12,6 @@ public class SellerServer extends Server {
         return null;
     }
 
-    private String[] response(String type, String[] data){
-        return data;
-    }
-
     private List<Product> acceptOrder(int customerID, List<Product> productList){
         return productList;
     }

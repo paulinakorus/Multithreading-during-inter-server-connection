@@ -28,10 +28,6 @@ public class CustomerServer extends Server {
         return product.getName();
     }
 
-    private String[] response(String type, String[] data){
-        return data;
-    }
-
     private List<Product> putOrder(int delivererID, List<Product> productList){
         return productList;
     }
