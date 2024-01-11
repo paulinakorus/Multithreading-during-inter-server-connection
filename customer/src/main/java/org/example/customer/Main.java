@@ -14,7 +14,7 @@ public class Main {
             //SocketChannel channel = SocketChannel.open(new InetSocketAddress("localhost", 2137));
 
             ObjectMapper objectMapper = new ObjectMapper();
-            CustomerClient customerClient = new CustomerClient("localhost", 2137);
+            KeeperClient keeperClient = new KeeperClient("localhost", 2137);
             /*Product product = new Product();
             product.setId(12);
             product.setName("Ja");
@@ -24,27 +24,18 @@ public class Main {
             user.setHost("sth_host");
             user.setId(1);
             user.setPort(2172);
-            String data = objectMapper.writeValueAsString(user);
+
             Payload payload = new Payload();
-            payload.setArgument(data);
-            payload.setMethod(Method.Register);
-
-
-            String payloadString = objectMapper.writeValueAsString(payload);
-            var result = customerClient.sendAndRead(payloadString);
-            var user_result = objectMapper.readValue(result, User.class);
+            payload.setArgument(null);
+            payload.setMethod(Method.GetOffer);
+            String payloadString3 = objectMapper.writeValueAsString(payload);
+            var result = keeperClient.sendAndRead(payloadString3);
             System.out.println(result);
 
-            Integer num = 1;
-            String data2 = objectMapper.writeValueAsString(num);
-            Payload payload2 = new Payload();
-            payload2.setArgument(data2);
-            payload2.setMethod(Method.Unregister);
-
-            var payloadString2 = objectMapper.writeValueAsString(payload2);
+            /*var payloadString2 = objectMapper.writeValueAsString(payload2);
             var result2 = customerClient.sendAndRead(payloadString2);
             var user_result2 = objectMapper.readValue(result, User.class);
-            System.out.println(result2);
+            System.out.println(result2);*/
 
             Thread thread = new Thread(() -> {
                 CustomerServer customerServer = new CustomerServer();

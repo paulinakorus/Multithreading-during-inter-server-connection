@@ -4,8 +4,10 @@ import org.example.service.model.*;
 import org.example.service.Server;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
 import java.util.List;
+
+import static java.util.Arrays.stream;
 
 
 public class KeeperServer extends Server {
@@ -24,7 +26,10 @@ public class KeeperServer extends Server {
                 case Test -> test((Product) object);
                 case Register -> register((User) object);
                 case Unregister -> unregister((Integer) object);
-                case ReturnOrder -> returnOrder((List<Product>) object);
+                case GetOffer -> getOffer();
+                case PutOrder -> putOrder((Order) object);
+                //case ReturnOrder -> returnOrder((List<Product>) object);
+
                 default -> throw new RuntimeException("Unexcepted method");
             };
             return objectMapper.writeValueAsString(obj);
@@ -60,27 +65,33 @@ public class KeeperServer extends Server {
         return null;
     }
 
-    private List<Product> getOffer(int customerID){
+    private List<Product> getOffer(){
         var offerList = wholeProductList.stream()
                 .filter(product -> (product.getProductStatus() == ProductStatus.Available))
                 .toList();
         return offerList;
-        // giving to this customer
     }
 
-    private void putOrder(UserProducts userProducts){
-        for (Product product : userProducts.getProductList()) {
-            product.setProductStatus(ProductStatus.Ordered);
+    private List<Product> putOrder(Order order){
+        List<Integer> puttedID = order.getProductList().stream()
+                .filter(product -> product.getProductStatus() == ProductStatus.Ordered)
+                .map(Product::getId)
+                .toList();
+        for (Product product : wholeProductList) {
+            for (Integer id : puttedID) {
+                if(product.getId().equals(id))
+                    product.setProductStatus(ProductStatus.Ordered);
+            }
         }
-        // getting from this customer
+        return wholeProductList;       //?
     }
 
     private void getOrder(int delivererID){
 
     }
 
-    private List<Product> returnOrder(List<Product> productList){
-        List<Integer> returnedID = productList.stream()
+    private List<Product> returnOrder(Product[] productTab){
+        List<Integer> returnedID = Arrays.stream(productTab)
                 .filter(product -> product.getProductStatus() == ProductStatus.Returned)
                 .map(Product::getId)
                 .toList();
@@ -93,7 +104,7 @@ public class KeeperServer extends Server {
         return wholeProductList;
     }
 
-    private User getInfo(int id1, int id2){
+    private User getInfo(int id2){
         User userID2;
         for (User user : wholeUserList) {
             if(user.getId().equals(id2)){

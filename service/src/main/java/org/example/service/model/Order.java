@@ -2,7 +2,7 @@ package org.example.service.model;
 
 import java.util.List;
 
-public class UserProducts {
+public class Order {
     private Integer userID;
     private List<Product> productList;
 

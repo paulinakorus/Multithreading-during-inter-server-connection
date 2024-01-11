@@ -47,14 +47,21 @@ public abstract class Server {
                 }
                 if(key.isReadable()){
                     try(var clientChannel = (SocketChannel)key.channel()){
+                        buffer = ByteBuffer.allocate(2056);
                         if(clientChannel.read(buffer) == -1){       // klient sie rozłączył
                             key.cancel();
                             //clientChannel.close();
                             return;
                         }
+                        buffer.flip();                  // ustawia wskaznik na poczatek i usatwia buffera na to ile wczytał
                         String data = new String(buffer.array(), StandardCharsets.UTF_8).trim();        // usuwa spacje i biale znaki
                         Payload payload = objectMapper.readValue(data, Payload.class);
-                        var response = execute(payload.getMethod(), objectMapper.readValue(payload.getArgument(), payload.getMethod().getType()));
+
+                        Object argument = null;
+                        if(payload.getArgument() != null)
+                            argument = objectMapper.readValue(payload.getArgument(), payload.getMethod().getType());
+
+                        var response = execute(payload.getMethod(), argument);
                         buffer = ByteBuffer.wrap(response.getBytes());
                         clientChannel.write(buffer);
                     }

@@ -26,7 +26,7 @@ public class CustomerServer extends Server {
         return product.getName();
     }
 
-    private List<Product> putOrder(UserProducts userProducts){
+    private List<Product> putOrder(Order userProducts){
         List<Product> productList = new ArrayList<>();
         return productList;
     }
