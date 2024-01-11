@@ -1,11 +1,9 @@
 package org.example.customer;
 
 import org.example.service.Server;
-import org.example.service.model.Method;
-import org.example.service.model.Product;
-import org.example.service.model.Receipt;
-import org.example.service.model.User;
+import org.example.service.model.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerServer extends Server {
@@ -28,7 +26,8 @@ public class CustomerServer extends Server {
         return product.getName();
     }
 
-    private List<Product> putOrder(int delivererID, List<Product> productList){
+    private List<Product> putOrder(UserProducts userProducts){
+        List<Product> productList = new ArrayList<>();
         return productList;
     }
 

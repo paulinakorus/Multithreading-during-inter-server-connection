@@ -15,7 +15,6 @@ public class Main {
 
             ObjectMapper objectMapper = new ObjectMapper();
             CustomerClient customerClient = new CustomerClient("localhost", 2137);
-            customerClient.connect();
             /*Product product = new Product();
             product.setId(12);
             product.setName("Ja");
@@ -36,7 +35,8 @@ public class Main {
             var user_result = objectMapper.readValue(result, User.class);
             System.out.println(result);
 
-            String data2 = objectMapper.writeValueAsString(1);
+            Integer num = 1;
+            String data2 = objectMapper.writeValueAsString(num);
             Payload payload2 = new Payload();
             payload2.setArgument(data2);
             payload2.setMethod(Method.Unregister);
