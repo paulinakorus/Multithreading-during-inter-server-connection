@@ -42,6 +42,7 @@ public class KeeperServer extends Server {
     private User register(User user){
         userList.add(user);
         System.out.println("Registering user with id: " + user.getId());
+        System.out.println("Numbers of users: " + userList.size());
 
         return user;
     }
@@ -49,9 +50,11 @@ public class KeeperServer extends Server {
     private User unregister(Integer id){
         for (User user : userList) {
             if (user.getId().equals(id)) {
+                User userToView = user;
                 userList.remove(user);
                 System.out.println("Unregistering user with id: " + id);
-                return user;
+                System.out.println("Numbers of users: " + userList.size());
+                return userToView;
             }
         }
         System.out.println("Unregistering faild. User with id: " + id + " does not exist");

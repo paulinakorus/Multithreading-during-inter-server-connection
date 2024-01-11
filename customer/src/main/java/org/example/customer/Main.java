@@ -30,13 +30,21 @@ public class Main {
             payload.setArgument(data);
             payload.setMethod(Method.Register);
 
+
             String payloadString = objectMapper.writeValueAsString(payload);
-            //ByteBuffer buffer = ByteBuffer.wrap(payloadString.getBytes());
             var result = customerClient.sendAndRead(payloadString);
             var user_result = objectMapper.readValue(result, User.class);
-            System.out.println(user_result.getHost());
             System.out.println(result);
-            //channel.close();
+
+            String data2 = objectMapper.writeValueAsString(1);
+            Payload payload2 = new Payload();
+            payload2.setArgument(data2);
+            payload2.setMethod(Method.Unregister);
+
+            var payloadString2 = objectMapper.writeValueAsString(payload2);
+            var result2 = customerClient.sendAndRead(payloadString2);
+            var user_result2 = objectMapper.readValue(result, User.class);
+            System.out.println(result2);
 
             Thread thread = new Thread(() -> {
                 CustomerServer customerServer = new CustomerServer();
