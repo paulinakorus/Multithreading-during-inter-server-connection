@@ -29,4 +29,12 @@ public class User {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }

@@ -24,8 +24,10 @@ public abstract class Client {
     public String sendAndRead(String text) throws IOException {
         ByteBuffer byteBuffer = ByteBuffer.wrap(text.getBytes());
         socketChannel.write(byteBuffer);
+
         byteBuffer = ByteBuffer.allocate(2056);
         socketChannel.read(byteBuffer);
+
         return new String(byteBuffer.array(), StandardCharsets.UTF_8).trim();
     }
 }
