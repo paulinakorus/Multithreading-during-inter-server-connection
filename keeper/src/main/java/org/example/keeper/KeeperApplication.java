@@ -2,7 +2,7 @@ package org.example.keeper;
 
 import org.example.keeper.service.KeeperGUI;
 
-public class Main {
+public class KeeperApplication {
     public static void main(String[] args){
         try{
             KeeperGUI keeperGUI = new KeeperGUI();
