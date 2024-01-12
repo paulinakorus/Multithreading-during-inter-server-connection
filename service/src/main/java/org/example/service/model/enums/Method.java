@@ -10,12 +10,12 @@ public enum Method {
     Register(User.class),
     Unregister(Integer.class),
     GetOrder(Order.class),
-    ReturnOrder(Product.class),
+    ReturnOrder(Order.class),
     GetInfo(Integer.class),
     GetOffer(),
     PutOrder(Order.class),
     ReturnReceipt(Receipt.class),
-    AcceptOrder();
+    AcceptOrder(Order.class);
     private final Class<?> type;
 
     Method(Class<?> type) {

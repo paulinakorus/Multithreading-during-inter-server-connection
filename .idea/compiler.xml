@@ -9,9 +9,17 @@
         <module name="seller" />
         <module name="deliverer" />
         <module name="service" />
-        <module name="customer" />
         <module name="keeper" />
+        <module name="customer" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="customer" target="19" />
+      <module name="deliverer" target="19" />
+      <module name="keeper" target="19" />
+      <module name="Lab06" target="19" />
+      <module name="seller" target="19" />
+      <module name="service" target="19" />
+    </bytecodeTargetLevel>
   </component>
 </project>

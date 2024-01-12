@@ -116,6 +116,7 @@ public class KeeperServer extends Server {
                 return userID2;
             }
         }
+        if(id2 == 0);
         System.out.println("User with id: " + id2 + " do not exist");
         return null;
     }

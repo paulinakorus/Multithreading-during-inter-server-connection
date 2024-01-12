@@ -75,7 +75,7 @@ public class KeeperClient extends Client {
         return user_result;
     }
 
-    public List<Product> returnOrder(Product[] productTab) throws IOException {
+    public List<Product> returnOrder(Product[] productTab/*???*/) throws IOException {
         data = objectMapper.writeValueAsString(productTab);
         payload.setArgument(data);
         payload.setMethod(Method.ReturnOrder);
