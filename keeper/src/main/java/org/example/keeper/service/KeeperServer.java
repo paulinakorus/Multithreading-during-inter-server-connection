@@ -3,6 +3,7 @@ package org.example.keeper.service;
 import org.example.service.model.*;
 import org.example.service.Server;
 import org.example.service.model.enums.Method;
+import org.example.service.model.enums.OrderStatus;
 import org.example.service.model.enums.ProductStatus;
 
 import java.util.ArrayList;
@@ -15,10 +16,12 @@ import static java.util.Arrays.stream;
 public class KeeperServer extends Server {
     private List<User> wholeUserList;
     private List<Product> wholeProductList;
+    private List<Order> wholeOrderList;
 
     public KeeperServer(){
         wholeProductList = new ArrayList<>();
         wholeUserList = new ArrayList<>();
+        wholeOrderList = new ArrayList<>();
     }
 
     @Override
@@ -32,7 +35,7 @@ public class KeeperServer extends Server {
                 case PutOrder -> putOrder((Order) object);
                 case ReturnOrder -> returnOrder((Product[]) object);
                 case GetInfo -> getInfo((Integer) object);
-                //case getOrder(); -> getOrder();
+                case GetOrder -> getOrder();
 
                 default -> throw new RuntimeException("Unexcepted method");
             };
@@ -76,7 +79,10 @@ public class KeeperServer extends Server {
         return offerList;
     }
 
-    private List<Product> putOrder(Order order){
+    private Order putOrder(Order order){
+        wholeOrderList.add(order);
+        order.setOrderStatus(OrderStatus.NotServed);
+
         List<Integer> puttedID = order.getProductList().stream()
                 .filter(product -> product.getProductStatus() == ProductStatus.Ordered)
                 .map(Product::getId)
@@ -87,11 +93,15 @@ public class KeeperServer extends Server {
                     product.setProductStatus(ProductStatus.Ordered);
             }
         }
-        return wholeProductList;       //?
+
+        return order;       //?
     }
 
-    private void getOrder(){
-
+    private Order getOrder(){
+        return wholeOrderList.stream()
+                .filter(order -> order.getOrderStatus() == OrderStatus.NotServed)
+                .findFirst()
+                .orElse(null);
     }
 
     private List<Product> returnOrder(Product[] productTab){
@@ -116,7 +126,9 @@ public class KeeperServer extends Server {
                 return userID2;
             }
         }
-        if(id2 == 0);
+        if(id2 == 0){
+            return wholeUserList.stream().findFirst().orElse(null);
+        }
         System.out.println("User with id: " + id2 + " do not exist");
         return null;
     }

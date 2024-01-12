@@ -9,7 +9,7 @@ public enum Method {
     Test(Product.class),
     Register(User.class),
     Unregister(Integer.class),
-    GetOrder(Order.class),
+    GetOrder(),
     ReturnOrder(Order.class),
     GetInfo(Integer.class),
     GetOffer(),

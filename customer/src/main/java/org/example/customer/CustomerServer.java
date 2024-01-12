@@ -3,6 +3,7 @@ package org.example.customer;
 import org.example.service.Server;
 import org.example.service.model.*;
 import org.example.service.model.enums.Method;
+import org.example.service.model.enums.OrderStatus;
 import org.example.service.model.enums.ProductStatus;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class CustomerServer extends Server {
         for (Product product : order.getProductList()) {
             product.setProductStatus(ProductStatus.Bought);
         }
+        order.setOrderStatus(OrderStatus.Bought);
         return order;//?
     }
 

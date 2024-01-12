@@ -5,6 +5,8 @@ import org.example.service.model.Order;
 import org.example.service.model.User;
 import org.example.service.model.enums.Method;
 import org.example.service.model.Product;
+import org.example.service.model.enums.ProductStatus;
+import org.example.service.model.enums.ProductStatusAtSeller;
 
 import java.util.List;
 
@@ -13,7 +15,7 @@ public class SellerServer extends Server {
     protected String execute(Method method, Object object) {
         try{
             Object obj = switch(method){
-                case AcceptOrder -> acceptOrder((List<Product>) object);
+                case AcceptOrder -> acceptOrder((Order) object);
                 default -> throw new RuntimeException("Unexcepted method");
             };
             return objectMapper.writeValueAsString(obj);
@@ -23,7 +25,15 @@ public class SellerServer extends Server {
         return null;
     }
 
-    private List<Product> acceptOrder(List<Product> productList){
-        return productList;
+    private Order acceptOrder(Order order){
+        for (Product product : order.getProductList()) {
+            if(product.getProductStatusAtSeller() == ProductStatusAtSeller.ToBought)
+                product.setProductStatus(ProductStatus.Bought);
+            else if(product.getProductStatusAtSeller() == ProductStatusAtSeller.ToReturn)
+                product.setProductStatus(ProductStatus.Returned);
+            else
+                System.out.println("Status at the seller do not exist");
+        }
+        return order;
     }
 }

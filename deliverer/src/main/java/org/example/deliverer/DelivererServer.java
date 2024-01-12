@@ -5,6 +5,7 @@ import org.example.service.model.Order;
 import org.example.service.model.User;
 import org.example.service.model.enums.Method;
 import org.example.service.model.Product;
+import org.example.service.model.enums.OrderStatus;
 import org.example.service.model.enums.ProductStatus;
 
 import java.util.List;
@@ -28,6 +29,7 @@ public class DelivererServer extends Server {
         for (Product product : order.getProductList()) {
             product.setProductStatus(ProductStatus.Returned);
         }
+        order.setOrderStatus(OrderStatus.Returned);
         return order;
     }
 }

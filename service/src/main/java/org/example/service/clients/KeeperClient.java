@@ -63,6 +63,18 @@ public class KeeperClient extends Client {
         return List.of(productTab_result);
     }
 
+    public Order getOrder(Order order) throws IOException {
+        data = objectMapper.writeValueAsString(order);
+        payload.setArgument(data);
+        payload.setMethod(Method.GetOrder);
+
+        payloadString = objectMapper.writeValueAsString(payload);
+        var result = this.sendAndRead(payloadString);
+        var order_result = objectMapper.readValue(result, Order.class);
+        System.out.println("Putting order");
+        return order_result;
+    }
+
     public User getInfo(int id2) throws IOException {
         data = objectMapper.writeValueAsString(id2);
         payload.setArgument(data);
