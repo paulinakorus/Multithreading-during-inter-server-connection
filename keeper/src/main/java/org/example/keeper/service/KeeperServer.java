@@ -5,6 +5,7 @@ import org.example.service.Server;
 import org.example.service.model.enums.Method;
 import org.example.service.model.enums.OrderStatus;
 import org.example.service.model.enums.ProductStatus;
+import org.example.service.model.enums.Role;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,9 +55,11 @@ public class KeeperServer extends Server {
                 case Unregister -> unregister((UUID) object);
                 case GetOffer -> getOffer();
                 case PutOrder -> putOrder((Order) object);
-                case ReturnOrder -> returnOrder((Product[]) object);
+                case ReturnOrder -> returnOrder((Order) object);
                 case GetInfo -> getInfo((Integer) object);
+                case GetInfoByUserRole -> getInfoByUserRole((Role) object);
                 case GetOrder -> getOrder();
+                case GetOrders -> getOrders();
 
                 default -> throw new RuntimeException("Unexcepted method");
             };
@@ -125,8 +128,12 @@ public class KeeperServer extends Server {
                 .orElse(null);
     }
 
-    private List<Product> returnOrder(Product[] productTab){
-        List<UUID> returnedID = Arrays.stream(productTab)
+    private List<Order> getOrders(){
+        return wholeOrderList;
+    }
+
+    private List<Product> returnOrder(Order order){
+        List<UUID> returnedID = order.getProductList().stream()
                 .filter(product -> product.getProductStatus() == ProductStatus.Returned)
                 .map(Product::getId)
                 .toList();
@@ -150,5 +157,12 @@ public class KeeperServer extends Server {
         }
         System.out.println("User with id: " + id2 + " do not exist");
         return null;
+    }
+
+    private User getInfoByUserRole(Role role){
+        return wholeUserList.stream()
+                .filter(user -> user.getRole() == role)
+                .findFirst()
+                .orElse(null);
     }
 }

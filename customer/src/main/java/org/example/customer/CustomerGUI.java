@@ -1,9 +1,16 @@
 package org.example.customer;
 
+import org.example.service.clients.DelivererClientImpl;
 import org.example.service.clients.KeeperClientImpl;
+import org.example.service.clients.SellerClientImpl;
+import org.example.service.clientsInterfaces.DelivererClient;
 import org.example.service.clientsInterfaces.KeeperClient;
+import org.example.service.clientsInterfaces.SellerClient;
 import org.example.service.model.Order;
 import org.example.service.model.Product;
+import org.example.service.model.enums.ProductStatus;
+import org.example.service.model.enums.ProductStatusAtSeller;
+import org.example.service.model.tables.OrderTable;
 import org.example.service.model.tables.ProductsTable;
 import org.example.service.model.User;
 import org.example.service.model.enums.Role;
@@ -20,8 +27,11 @@ public class CustomerGUI extends JFrame {
     private String host = "localhost";
     private CustomerServer customerServer = null;
     private KeeperClient keeperClient = new KeeperClientImpl(host, 2137);
+    private SellerClient sellerClient;
+    private DelivererClient delivererClient;
     private User user;
     private ProductsTable productsTableModel;
+    private OrderTable orderTableModel;
 
     private JPanel customerPanel;
     private JTabbedPane tabbedPane1;
@@ -41,6 +51,9 @@ public class CustomerGUI extends JFrame {
     private JTable productsTable;
     private JTable ordersTable;
     private JTable productsOrderTable;
+    private JButton returnAllButton;
+    private JButton readProductsButton;
+    private JButton refreashTablesButton;
 
     public CustomerGUI() throws IOException {
         this.setTitle("Customer");                                     // set title of frame
@@ -54,11 +67,25 @@ public class CustomerGUI extends JFrame {
         setUpButtons();
     }
 
-    private void setUpTable() throws IOException {
+    private void setUpProductsTable() throws IOException {
         productsTableModel = new ProductsTable(keeperClient.getOffer());
         productsTable.setModel(productsTableModel);
         productsTable.setAutoCreateRowSorter(false);
         productsTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+    }
+
+    private void setUpOrderTable() throws IOException {
+        orderTableModel = new OrderTable(keeperClient.getOrders());
+        ordersTable.setModel(orderTableModel);
+        ordersTable.setAutoCreateRowSorter(false);
+        ordersTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+
+    private void setUpOrderProductsTable(List<Product> productsTable) throws IOException{
+        productsTableModel = new ProductsTable(productsTable);
+        productsOrderTable.setModel(productsTableModel);
+        productsOrderTable.setAutoCreateRowSorter(false);
+        productsOrderTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     }
     private void setUpButtons(){
         registerButton.addActionListener(new ActionListener() {
@@ -73,8 +100,7 @@ public class CustomerGUI extends JFrame {
 
                         try {
                             keeperClient.register(user);
-                            setUpTable();
-                            //var offer = keeperClient.getOffer();
+                            setUpProductsTable();
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -88,11 +114,6 @@ public class CustomerGUI extends JFrame {
                             }
                         });
                         thread.start();
-                        /*try {
-                            setUpLists();
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }*/
                     }
                 }
             }
@@ -115,7 +136,7 @@ public class CustomerGUI extends JFrame {
         orderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                if(actionEvent.getSource() == actionEvent){
+                if(actionEvent.getSource() == orderButton){
                     Order order = new Order();
                     order.setUserID(user.getId());
 
@@ -125,11 +146,143 @@ public class CustomerGUI extends JFrame {
                         Product product = new Product();
                         product.setId((UUID) productsTableModel.getValueAt(row, 0));
                         product.setName((String) productsTableModel.getValueAt(row, 1));
+                        product.setProductStatus(ProductStatus.Ordered);
                         sellectedProducts.add(product);
                     }
                     order.setProductList(sellectedProducts);
                     try {
                         keeperClient.putOrder(order);
+                        setUpProductsTable();
+                        setUpOrderTable();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
+
+        readProductsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if(actionEvent.getSource() == readProductsButton){
+                    int sellectedRow = ordersTable.getSelectedRow();
+                    var orderID = (UUID) ordersTable.getValueAt(sellectedRow, 0);
+
+                    try {
+                        List<Order> orderList = keeperClient.getOrders();
+                        for (Order oneOrder : orderList) {
+                            if(oneOrder.getOrderID().equals(orderID)){
+                                setUpOrderProductsTable(oneOrder.getProductList());
+                            }
+                        }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
+
+        returnButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if(actionEvent.getSource() == returnButton){
+                    int sellectedRowProduct = productsOrderTable.getSelectedRow();
+                    var productID = (UUID) productsOrderTable.getValueAt(sellectedRowProduct, 0);
+
+                    int sellectedRowOrder = ordersTable.getSelectedRow();
+                    var orderID = (UUID) ordersTable.getValueAt(sellectedRowOrder, 0);
+
+                    try {
+                        List<Order> orderList = keeperClient.getOrders();
+                        for (Order oneOrder : orderList) {
+                            if(oneOrder.getOrderID().equals(orderID)){
+                                for (Product product : oneOrder.getProductList()) {
+                                    if(product.getId().equals(productID)){
+                                        product.setProductStatusAtSeller(ProductStatusAtSeller.ToReturn);
+                                        sellerClient = new SellerClientImpl(host, keeperClient.getInfoByUserRole(Role.Seller).getPort());
+                                        sellerClient.acceptOrder(oneOrder);
+                                        keeperClient.returnOrder(oneOrder);
+                                        setUpProductsTable();
+                                        break;
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
+
+        payButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if(actionEvent.getSource() == payButton){
+                    int sellectedRowProduct = productsOrderTable.getSelectedRow();
+                    var productID = (UUID) productsOrderTable.getValueAt(sellectedRowProduct, 0);
+
+                    int sellectedRowOrder = ordersTable.getSelectedRow();
+                    var orderID = (UUID) ordersTable.getValueAt(sellectedRowOrder, 0);
+
+                    try {
+                        List<Order> orderList = keeperClient.getOrders();
+                        for (Order oneOrder : orderList) {
+                            if(oneOrder.getOrderID().equals(orderID)){
+                                for (Product product : oneOrder.getProductList()) {
+                                    if(product.getId().equals(productID)){
+                                        if(product.getProductStatusAtSeller().equals(ProductStatusAtSeller.ToBought)){
+                                            sellerClient =  new SellerClientImpl(host, keeperClient.getInfoByUserRole(Role.Seller).getPort());
+                                            sellerClient.acceptOrder(oneOrder);
+                                            setUpOrderProductsTable(oneOrder.getProductList());
+                                            setUpOrderTable();
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
+
+        returnAllButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (actionEvent.getSource() == returnAllButton){
+                    int sellectedRow = ordersTable.getSelectedRow();
+                    var orderID = (UUID) ordersTable.getValueAt(sellectedRow, 0);
+
+                    try {
+                        List<Order> orderList = keeperClient.getOrders();
+                        for (Order oneOrder : orderList) {
+                            if(oneOrder.getOrderID().equals(orderID)){
+                                delivererClient = new DelivererClientImpl(host, keeperClient.getInfoByUserRole(Role.Deliver).getPort());
+                                delivererClient.returnOrder(oneOrder);
+                                keeperClient.returnOrder(oneOrder);
+                                setUpProductsTable();
+                                break;
+                            }
+                        }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
+
+        refreashTablesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if (actionEvent.getSource() == refreashTablesButton){
+                    try {
+                        setUpOrderTable();
+                        setUpProductsTable();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }

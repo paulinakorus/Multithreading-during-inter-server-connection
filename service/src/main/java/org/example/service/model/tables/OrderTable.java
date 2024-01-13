@@ -1,4 +1,41 @@
 package org.example.service.model.tables;
 
-public class OrderTable {
+import org.example.service.model.Order;
+
+import javax.swing.table.AbstractTableModel;
+import java.util.Comparator;
+import java.util.List;
+
+public class OrderTable extends AbstractTableModel {
+    private final String[] COLUMNS = new String[]{"Id", "Status", "Products amount"};
+    private List<Order> orderList;
+
+    public OrderTable(List<Order> orderList){
+        this.orderList = orderList.stream().sorted(Comparator.comparing(c -> c.getOrderID())).toList();
+    }
+
+    @Override
+    public int getRowCount() {
+        return orderList.size();
+    }
+
+    @Override
+    public int getColumnCount() {
+        return COLUMNS.length;
+    }
+
+    @Override
+    public Object getValueAt(int rowIndex, int columnIndex) {
+        Order order = orderList.get(rowIndex);
+        return switch (columnIndex){
+            case 0 -> order.getOrderID();
+            case 1 -> order.getOrderStatus();
+            case 2 -> order.getProductList().size();
+            default -> "-";
+        };
+    }
+    @Override
+    public String getColumnName(int column) {
+        return COLUMNS[column];
+    }
 }

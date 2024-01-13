@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.service.Client;
 import org.example.service.model.*;
 import org.example.service.model.enums.Method;
+import org.example.service.model.enums.Role;
 
 import java.io.IOException;
 import java.util.List;
@@ -65,16 +66,26 @@ public class KeeperClientImpl extends Client implements org.example.service.clie
         return order_result;
     }
 
-    public Order getOrder(Order order) throws IOException {
-        data = objectMapper.writeValueAsString(order);
-        payload.setArgument(data);
+    public Order getOrder() throws IOException {
+        payload.setArgument(null);
         payload.setMethod(Method.GetOrder);
 
         payloadString = objectMapper.writeValueAsString(payload);
         var result = this.sendAndRead(payloadString);
         var order_result = objectMapper.readValue(result, Order.class);
-        System.out.println("Putting order");
+        System.out.println("Getting order");
         return order_result;
+    }
+
+    public List<Order> getOrders() throws IOException {
+        payload.setArgument(null);
+        payload.setMethod(Method.GetOrders);
+
+        payloadString = objectMapper.writeValueAsString(payload);
+        var result = this.sendAndRead(payloadString);
+        var orders_result = objectMapper.readValue(result, Order[].class);
+        System.out.println("Getting orders");
+        return List.of(orders_result);
     }
 
     public User getInfo(int id2) throws IOException {
@@ -89,8 +100,20 @@ public class KeeperClientImpl extends Client implements org.example.service.clie
         return user_result;
     }
 
-    public List<Product> returnOrder(Product[] productTab/*???*/) throws IOException {
-        data = objectMapper.writeValueAsString(productTab);
+    public User getInfoByUserRole(Role role) throws IOException {
+        data = objectMapper.writeValueAsString(role);
+        payload.setArgument(data);
+        payload.setMethod(Method.GetInfoByUserRole);
+
+        payloadString = objectMapper.writeValueAsString(payload);
+        var result = this.sendAndRead(payloadString);
+        var user_result = objectMapper.readValue(result, User.class);
+        System.out.println("Info about user by role: " + result);
+        return user_result;
+    }
+
+    public List<Product> returnOrder(Order order) throws IOException {
+        data = objectMapper.writeValueAsString(order);
         payload.setArgument(data);
         payload.setMethod(Method.ReturnOrder);
 

@@ -37,6 +37,10 @@ public class SellerGUI extends JFrame{
         setUpButtons();
     }
 
+    private void setUpAccept(){
+
+    }
+
     private void setUpButtons(){
         registerButton.addActionListener(new ActionListener() {
             @Override

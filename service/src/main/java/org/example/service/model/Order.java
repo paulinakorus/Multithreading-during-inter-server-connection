@@ -6,9 +6,18 @@ import java.util.List;
 import java.util.UUID;
 
 public class Order {
+    private UUID orderID = UUID.randomUUID();
     private UUID userID;
     private List<Product> productList;
     private OrderStatus orderStatus;
+
+    public UUID getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(UUID orderID) {
+        this.orderID = orderID;
+    }
 
     public UUID getUserID() {
         return userID;

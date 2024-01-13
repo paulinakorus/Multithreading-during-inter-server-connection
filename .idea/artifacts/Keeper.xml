@@ -1,0 +1,17 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Keeper">
+    <output-path>$PROJECT_DIR$/out/artifacts/Keeper</output-path>
+    <root id="archive" name="Keeper.jar">
+      <element id="directory" name="source-code">
+        <element id="module-source" name="keeper" />
+      </element>
+      <element id="module-output" name="keeper" />
+      <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.15.2" />
+      <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.15.2" />
+      <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.15.2" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/keeper/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>
