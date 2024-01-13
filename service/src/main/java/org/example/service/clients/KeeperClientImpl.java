@@ -2,22 +2,18 @@ package org.example.service.clients;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.service.Client;
-import org.example.service.clientsInterfaces.CustomerClientInterface;
-import org.example.service.clientsInterfaces.DelivererClientInstance;
-import org.example.service.clientsInterfaces.KeeperClientInstance;
 import org.example.service.model.*;
 import org.example.service.model.enums.Method;
 
 import java.io.IOException;
 import java.util.List;
 
-public class KeeperClient extends Client implements KeeperClientInstance {
-    private static KeeperClientInstance INSTANCE = null;
+public class KeeperClientImpl extends Client implements org.example.service.clientsInterfaces.KeeperClient {
     private ObjectMapper objectMapper;
     private Payload payload = new Payload();
     private String data;
     private String payloadString;
-    public KeeperClient(String host, int port) {
+    public KeeperClientImpl(String host, int port) {
         super(host, port);
     }
 
@@ -101,12 +97,5 @@ public class KeeperClient extends Client implements KeeperClientInstance {
         var productTab_result = objectMapper.readValue(result, Product[].class);
         System.out.println("Returning order");
         return List.of(productTab_result);
-    }
-
-    public static KeeperClientInstance getINSTANCE(){
-        if(INSTANCE == null){
-            INSTANCE = (KeeperClientInstance) new KeeperClient(Client.getHost(), Client.getPort());
-        }
-        return INSTANCE;
     }
 }

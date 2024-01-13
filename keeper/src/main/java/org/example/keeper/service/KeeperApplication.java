@@ -1,4 +1,4 @@
-package org.example.keeper;
+package org.example.keeper.service;
 
 import org.example.keeper.service.KeeperGUI;
 

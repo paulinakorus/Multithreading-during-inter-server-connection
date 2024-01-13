@@ -5,7 +5,7 @@ import org.example.service.model.Receipt;
 
 import java.io.IOException;
 
-public interface CustomerClientInterface {
+public interface CustomerClient {
     Receipt returnReceipt(Receipt receipt) throws IOException;
     Order putOrder(Order order) throws IOException;
 }

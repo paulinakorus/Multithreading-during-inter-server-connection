@@ -7,7 +7,7 @@ import org.example.service.model.User;
 import java.io.IOException;
 import java.util.List;
 
-public interface KeeperClientInstance {
+public interface KeeperClient {
     User register(User user) throws IOException;
     User unregister(Integer id) throws IOException;
     List<Product> getOffer() throws IOException;

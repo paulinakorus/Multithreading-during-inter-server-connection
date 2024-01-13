@@ -1,5 +1,7 @@
 package org.example.seller;
 
+import org.example.service.clients.KeeperClientImpl;
+import org.example.service.clientsInterfaces.KeeperClient;
 import org.example.service.model.User;
 import org.example.service.model.enums.Role;
 
@@ -11,6 +13,7 @@ import java.io.IOException;
 public class SellerGUI extends JFrame{
     private String host = "localhost";
     private SellerServer sellerServer = null;
+    private KeeperClient keeperClient = new KeeperClientImpl(host, 2137);
 
     private JPanel sellerPanel;
     private JLabel sellerLabel;
@@ -46,12 +49,16 @@ public class SellerGUI extends JFrame{
                         hostTextField.setText(host);
 
                         user.setPort(Integer.valueOf(portTextField.getText()));
-                        //get instance
+                        try {
+                            keeperClient.register(user);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
 
                         Thread thread = new Thread(() -> {
                             sellerServer = new SellerServer();
                             try {
-                                sellerServer.start();
+                                sellerServer.start(user.getHost(), user.getPort());
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }

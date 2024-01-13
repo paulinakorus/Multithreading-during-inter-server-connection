@@ -1,9 +1,9 @@
-package org.example.customer;
+package org.example.seller;
 
-public class CustomerApplication {
+public class SellerApplication {
     public static void main(String[] args){
         try{
-            CustomerGUI customerGUI = new CustomerGUI();
+            SellerGUI keeperGUI = new SellerGUI();
         }catch (Exception exception){
             exception.printStackTrace();
         }

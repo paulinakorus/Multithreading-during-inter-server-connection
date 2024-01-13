@@ -7,8 +7,8 @@ import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
 
 public abstract class Client {
-    private static String host = null;
-    private static int port = 0;
+    private final String host;
+    private final int port;
     private SocketChannel socketChannel;
     public Client(String host, int port){
         this.host = host;
@@ -31,13 +31,5 @@ public abstract class Client {
         disconnect();
 
         return new String(byteBuffer.array(), StandardCharsets.UTF_8).trim();
-    }
-
-    public static String getHost() {
-        return host;
-    }
-
-    public static int getPort() {
-        return port;
     }
 }
