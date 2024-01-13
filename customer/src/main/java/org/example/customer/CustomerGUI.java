@@ -4,23 +4,24 @@ import org.example.service.clients.KeeperClientImpl;
 import org.example.service.clientsInterfaces.KeeperClient;
 import org.example.service.model.Order;
 import org.example.service.model.Product;
+import org.example.service.model.tables.ProductsTable;
 import org.example.service.model.User;
 import org.example.service.model.enums.Role;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class CustomerGUI extends JFrame {
     private String host = "localhost";
     private CustomerServer customerServer = null;
     private KeeperClient keeperClient = new KeeperClientImpl(host, 2137);
     private User user;
+    private ProductsTable productsTableModel;
 
     private JPanel customerPanel;
     private JTabbedPane tabbedPane1;
@@ -32,13 +33,14 @@ public class CustomerGUI extends JFrame {
     private JButton unregisterButton;
     private JList productsList;
     private JButton orderButton;
-    private JList ordersList;
-    private JList orderProductsList;
     private JButton returnButton;
     private JButton payButton;
     private JLabel hostLabel;
     private JLabel portLabel;
     private JLabel customerLabel;
+    private JTable productsTable;
+    private JTable ordersTable;
+    private JTable productsOrderTable;
 
     public CustomerGUI() throws IOException {
         this.setTitle("Customer");                                     // set title of frame
@@ -52,14 +54,12 @@ public class CustomerGUI extends JFrame {
         setUpButtons();
     }
 
-    private void setUpLists() throws IOException {
-        var offer = keeperClient.getOffer().stream()
-                .map(Product::getName)
-                .toArray();
-        productsList = new JList<>(offer);
-        productsList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+    private void setUpTable() throws IOException {
+        productsTableModel = new ProductsTable(keeperClient.getOffer());
+        productsTable.setModel(productsTableModel);
+        productsTable.setAutoCreateRowSorter(false);
+        productsTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     }
-
     private void setUpButtons(){
         registerButton.addActionListener(new ActionListener() {
             @Override
@@ -73,7 +73,8 @@ public class CustomerGUI extends JFrame {
 
                         try {
                             keeperClient.register(user);
-                            var offer = keeperClient.getOffer();
+                            setUpTable();
+                            //var offer = keeperClient.getOffer();
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -118,13 +119,20 @@ public class CustomerGUI extends JFrame {
                     Order order = new Order();
                     order.setUserID(user.getId());
 
-                    productsList.addListSelectionListener(new ListSelectionListener() {
-                        @Override
-                        public void valueChanged(ListSelectionEvent e) {
-                            List<Product> selectedProducts = productsList.getSelectedValuesList();
-                            order.setProductList(selectedProducts);
-                        }
-                    });
+                    List<Product> sellectedProducts = new ArrayList<>();
+                    int[] sellectedRows = productsTable.getSelectedRows();
+                    for(int row : sellectedRows){
+                        Product product = new Product();
+                        product.setId((UUID) productsTableModel.getValueAt(row, 0));
+                        product.setName((String) productsTableModel.getValueAt(row, 1));
+                        sellectedProducts.add(product);
+                    }
+                    order.setProductList(sellectedProducts);
+                    try {
+                        keeperClient.putOrder(order);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
         });

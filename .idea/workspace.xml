@@ -4,17 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e71a3d7c-4391-4995-8dbb-e24ef2ad2d90" name="Changes" comment="Finishing registering and unregistering">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="e71a3d7c-4391-4995-8dbb-e24ef2ad2d90" name="Changes" comment="Getting offer">
+      <change afterPath="$PROJECT_DIR$/service/src/main/java/org/example/service/model/ProductsTable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/java/org/example/customer/CustomerGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/org/example/customer/CustomerGUI.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customer/src/main/java/org/example/customer/CustomerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/org/example/customer/CustomerGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/keeper/src/main/java/org/example/keeper/service/KeeperServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/keeper/src/main/java/org/example/keeper/service/KeeperServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/keeper/target/classes/org/example/keeper/service/KeeperServer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/keeper/target/classes/org/example/keeper/service/KeeperServer$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/keeper/target/classes/org/example/keeper/service/KeeperServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/keeper/target/classes/org/example/keeper/service/KeeperServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/org/example/service/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/org/example/service/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/org/example/service/clients/KeeperClientImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/org/example/service/clients/KeeperClientImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/org/example/service/clientsInterfaces/KeeperClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/org/example/service/clientsInterfaces/KeeperClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/org/example/service/model/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/org/example/service/model/Order.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/org/example/service/model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/org/example/service/model/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/target/classes/org/example/service/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/classes/org/example/service/Server.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/target/classes/org/example/service/model/Product.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/classes/org/example/service/model/Product.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,8 +19,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -156,7 +151,14 @@
       <option name="project" value="LOCAL" />
       <updated>1705160433839</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Getting offer">
+      <created>1705168253163</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1705168253163</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -170,21 +172,12 @@
     <MESSAGE value="Some changes in Interfaces and connecting GUI" />
     <MESSAGE value="Finishing DelivererGUI" />
     <MESSAGE value="Finishing registering and unregistering" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finishing registering and unregistering" />
+    <MESSAGE value="Getting offer" />
+    <option name="LAST_COMMIT_MESSAGE" value="Getting offer" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/customer/src/main/java/org/example/customer/CustomerGUI.java</url>
-          <line>123</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/customer/src/main/java/org/example/customer/CustomerGUI.java</url>
-          <line>75</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/service/src/main/java/org/example/service/Server.java</url>
           <line>59</line>
