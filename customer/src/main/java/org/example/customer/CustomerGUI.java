@@ -2,13 +2,19 @@ package org.example.customer;
 
 import org.example.service.clients.KeeperClientImpl;
 import org.example.service.clientsInterfaces.KeeperClient;
+import org.example.service.model.Order;
+import org.example.service.model.Product;
 import org.example.service.model.User;
 import org.example.service.model.enums.Role;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 public class CustomerGUI extends JFrame {
     private String host = "localhost";
@@ -34,7 +40,7 @@ public class CustomerGUI extends JFrame {
     private JLabel portLabel;
     private JLabel customerLabel;
 
-    public CustomerGUI() {
+    public CustomerGUI() throws IOException {
         this.setTitle("Customer");                                     // set title of frame
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);           // exit out off application
         this.setResizable(false);                                      // preventing frame from being resized
@@ -44,6 +50,14 @@ public class CustomerGUI extends JFrame {
 
         hostTextField.setText(host);
         setUpButtons();
+    }
+
+    private void setUpLists() throws IOException {
+        var offer = keeperClient.getOffer().stream()
+                .map(Product::getName)
+                .toArray();
+        productsList = new JList<>(offer);
+        productsList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
     }
 
     private void setUpButtons(){
@@ -59,6 +73,7 @@ public class CustomerGUI extends JFrame {
 
                         try {
                             keeperClient.register(user);
+                            var offer = keeperClient.getOffer();
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -72,6 +87,11 @@ public class CustomerGUI extends JFrame {
                             }
                         });
                         thread.start();
+                        /*try {
+                            setUpLists();
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }*/
                     }
                 }
             }
@@ -87,6 +107,24 @@ public class CustomerGUI extends JFrame {
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
+                }
+            }
+        });
+
+        orderButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if(actionEvent.getSource() == actionEvent){
+                    Order order = new Order();
+                    order.setUserID(user.getId());
+
+                    productsList.addListSelectionListener(new ListSelectionListener() {
+                        @Override
+                        public void valueChanged(ListSelectionEvent e) {
+                            List<Product> selectedProducts = productsList.getSelectedValuesList();
+                            order.setProductList(selectedProducts);
+                        }
+                    });
                 }
             }
         });

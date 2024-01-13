@@ -23,6 +23,26 @@ public class KeeperServer extends Server {
         wholeProductList = new ArrayList<>();
         wholeUserList = new ArrayList<>();
         wholeOrderList = new ArrayList<>();
+
+        generateProductList();
+    }
+
+    private void generateProductList(){
+        var product1 = new Product();
+        product1.setName("Product 1");
+        product1.setProductStatus(ProductStatus.Available);
+
+        var product2 = new Product();
+        product2.setName("Product 2");
+        product2.setProductStatus(ProductStatus.Available);
+
+        var product3 = new Product();
+        product3.setName("Product 3");
+        product3.setProductStatus(ProductStatus.Available);
+
+        wholeProductList.add(product1);
+        wholeProductList.add(product2);
+        wholeProductList.add(product3);
     }
 
     @Override
@@ -74,7 +94,7 @@ public class KeeperServer extends Server {
     }
 
     private List<Product> getOffer(){
-        var offerList = wholeProductList.stream()
+        List<Product> offerList = wholeProductList.stream()
                 .filter(product -> (product.getProductStatus() == ProductStatus.Available))
                 .toList();
         return offerList;
@@ -84,12 +104,12 @@ public class KeeperServer extends Server {
         wholeOrderList.add(order);
         order.setOrderStatus(OrderStatus.NotServed);
 
-        List<Integer> puttedID = order.getProductList().stream()
+        List<UUID> puttedID = order.getProductList().stream()
                 .filter(product -> product.getProductStatus() == ProductStatus.Ordered)
                 .map(Product::getId)
                 .toList();
         for (Product product : wholeProductList) {
-            for (Integer id : puttedID) {
+            for (UUID id : puttedID) {
                 if(product.getId().equals(id))
                     product.setProductStatus(ProductStatus.Ordered);
             }
@@ -106,12 +126,12 @@ public class KeeperServer extends Server {
     }
 
     private List<Product> returnOrder(Product[] productTab){
-        List<Integer> returnedID = Arrays.stream(productTab)
+        List<UUID> returnedID = Arrays.stream(productTab)
                 .filter(product -> product.getProductStatus() == ProductStatus.Returned)
                 .map(Product::getId)
                 .toList();
         for (Product product : wholeProductList) {
-            for (Integer id : returnedID) {
+            for (UUID id : returnedID) {
                 if(product.getId().equals(id))
                     product.setProductStatus(ProductStatus.Available);
             }

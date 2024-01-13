@@ -58,6 +58,7 @@ public abstract class Server {
                         Payload payload = objectMapper.readValue(data, Payload.class);
 
                         Object argument = null;
+                        String agument = payload.getArgument();
                         if(payload.getArgument() != null)
                             argument = objectMapper.readValue(payload.getArgument(), payload.getMethod().getType());
 

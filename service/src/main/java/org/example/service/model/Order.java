@@ -3,17 +3,18 @@ package org.example.service.model;
 import org.example.service.model.enums.OrderStatus;
 
 import java.util.List;
+import java.util.UUID;
 
 public class Order {
-    private Integer userID;
+    private UUID userID;
     private List<Product> productList;
     private OrderStatus orderStatus;
 
-    public Integer getUserID() {
+    public UUID getUserID() {
         return userID;
     }
 
-    public void setUserID(Integer userID) {
+    public void setUserID(UUID userID) {
         this.userID = userID;
     }
 

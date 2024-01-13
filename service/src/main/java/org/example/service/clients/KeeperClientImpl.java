@@ -44,12 +44,13 @@ public class KeeperClientImpl extends Client implements org.example.service.clie
 
     public List<Product> getOffer() throws IOException {
         payload.setMethod(Method.GetOffer);
+        payload.setArgument(null);
 
         payloadString = objectMapper.writeValueAsString(payload);
         var result = this.sendAndRead(payloadString);
-        var productTab_result = objectMapper.readValue(result, Product[].class);
+        var productList_result = objectMapper.readValue(result, Product[].class);
         System.out.println("Getting offer");
-        return List.of(productTab_result);
+        return List.of(productList_result);
     }
 
     public Order putOrder(Order order) throws IOException {
