@@ -2,13 +2,17 @@ package org.example.service.clients;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.service.Client;
+import org.example.service.clientsInterfaces.CustomerClientInterface;
+import org.example.service.clientsInterfaces.DelivererClientInstance;
+import org.example.service.clientsInterfaces.SellerClientInterface;
 import org.example.service.model.Order;
 import org.example.service.model.Payload;
 import org.example.service.model.enums.Method;
 
 import java.io.IOException;
 
-public class SellerClient extends Client {
+public class SellerClient extends Client implements SellerClientInterface{
+    private static SellerClientInterface INSTANCE = null;
     private ObjectMapper objectMapper;
     private Payload payload = new Payload();
     private String data;
@@ -27,5 +31,12 @@ public class SellerClient extends Client {
         var order_result = objectMapper.readValue(result, Order.class);
         System.out.println("Accepting order");
         return order_result;
+    }
+
+    public static SellerClientInterface getINSTANCE(){
+        if(INSTANCE == null){
+            INSTANCE = (SellerClientInterface) new SellerClient(Client.getHost(), Client.getPort());
+        }
+        return INSTANCE;
     }
 }

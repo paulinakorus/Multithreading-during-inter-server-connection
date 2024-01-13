@@ -2,13 +2,16 @@ package org.example.service.clients;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.service.Client;
+import org.example.service.clientsInterfaces.CustomerClientInterface;
+import org.example.service.clientsInterfaces.DelivererClientInstance;
 import org.example.service.model.Order;
 import org.example.service.model.Payload;
 import org.example.service.model.enums.Method;
 
 import java.io.IOException;
 
-public class DelivererClient extends Client {
+public class DelivererClient extends Client implements DelivererClientInstance{
+    private static DelivererClientInstance INSTANCE = null;
     private ObjectMapper objectMapper;
     private Payload payload = new Payload();
     private String data;
@@ -30,5 +33,11 @@ public class DelivererClient extends Client {
         return order_result;
     }
 
+    public static DelivererClientInstance getINSTANCE(){
+        if(INSTANCE == null){
+            INSTANCE = (DelivererClientInstance) new DelivererClient(Client.getHost(), Client.getPort());
+        }
+        return INSTANCE;
+    }
 }
 

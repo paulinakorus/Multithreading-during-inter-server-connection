@@ -2,13 +2,17 @@ package org.example.service.clients;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.service.Client;
+import org.example.service.clientsInterfaces.CustomerClientInterface;
+import org.example.service.clientsInterfaces.DelivererClientInstance;
+import org.example.service.clientsInterfaces.KeeperClientInstance;
 import org.example.service.model.*;
 import org.example.service.model.enums.Method;
 
 import java.io.IOException;
 import java.util.List;
 
-public class KeeperClient extends Client {
+public class KeeperClient extends Client implements KeeperClientInstance {
+    private static KeeperClientInstance INSTANCE = null;
     private ObjectMapper objectMapper;
     private Payload payload = new Payload();
     private String data;
@@ -51,16 +55,16 @@ public class KeeperClient extends Client {
         return List.of(productTab_result);
     }
 
-    public List<Product> putOrder(Order order) throws IOException {
+    public Order putOrder(Order order) throws IOException {
         data = objectMapper.writeValueAsString(order);
         payload.setArgument(data);
         payload.setMethod(Method.PutOrder);
 
         payloadString = objectMapper.writeValueAsString(payload);
         var result = this.sendAndRead(payloadString);
-        var productTab_result = objectMapper.readValue(result, Product[].class);
+        var order_result = objectMapper.readValue(result, Order.class);
         System.out.println("Putting order");
-        return List.of(productTab_result);
+        return order_result;
     }
 
     public Order getOrder(Order order) throws IOException {
@@ -97,5 +101,12 @@ public class KeeperClient extends Client {
         var productTab_result = objectMapper.readValue(result, Product[].class);
         System.out.println("Returning order");
         return List.of(productTab_result);
+    }
+
+    public static KeeperClientInstance getINSTANCE(){
+        if(INSTANCE == null){
+            INSTANCE = (KeeperClientInstance) new KeeperClient(Client.getHost(), Client.getPort());
+        }
+        return INSTANCE;
     }
 }
