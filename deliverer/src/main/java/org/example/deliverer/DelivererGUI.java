@@ -2,7 +2,7 @@ package org.example.deliverer;
 
 import javax.swing.*;
 
-public class DeliverGUI extends JFrame{
+public class DelivererGUI extends JFrame{
     private JPanel delivererPanel;
     private JLabel delivererLabel;
     private JTextField hostTextField;
@@ -10,11 +10,11 @@ public class DeliverGUI extends JFrame{
     private JButton registerButton;
     private JButton uregisterButton;
     private JList orderList;
-    private JButton buyAllProductsButton;
     private JLabel portLabel;
     private JLabel hostLabel;
+    private JButton buyAllProductsButton;
 
-    public DeliverGUI() {
+    public DelivererGUI() {
         this.setTitle("Keeper");                                     // set title of frame
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);           // exit out off application
         this.setResizable(false);                                      // preventing frame from being resized

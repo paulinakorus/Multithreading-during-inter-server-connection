@@ -1,9 +1,9 @@
 package org.example.deliverer;
 
-public class DeliverApplication {
+public class DelivererApplication {
     public static void main(String[] args){
         try{
-            DeliverGUI deliverGUI = new DeliverGUI();
+            DelivererGUI deliverGUI = new DelivererGUI();
         }catch (Exception exception){
             exception.printStackTrace();
         }
