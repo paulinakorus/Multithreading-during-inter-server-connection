@@ -11,7 +11,7 @@ import org.example.service.model.enums.Method;
 import java.io.IOException;
 
 public class CustomerClientImpl extends Client implements CustomerClient {
-        private ObjectMapper objectMapper;
+        private ObjectMapper objectMapper = new ObjectMapper();
         private Payload payload = new Payload();
         private String data;
         private String payloadString;

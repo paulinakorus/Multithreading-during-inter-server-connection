@@ -9,6 +9,7 @@ import org.example.service.model.enums.ProductStatus;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import static java.util.Arrays.stream;
 
@@ -30,7 +31,7 @@ public class KeeperServer extends Server {
             Object obj = switch(method){
                 case Test -> test((Product) object);
                 case Register -> register((User) object);
-                case Unregister -> unregister((Integer) object);
+                case Unregister -> unregister((UUID) object);
                 case GetOffer -> getOffer();
                 case PutOrder -> putOrder((Order) object);
                 case ReturnOrder -> returnOrder((Product[]) object);
@@ -58,7 +59,7 @@ public class KeeperServer extends Server {
         return user;
     }
 
-    private User unregister(Integer id){
+    private User unregister(UUID id){
         for (User user : wholeUserList) {
             if (user.getId().equals(id)) {
                 User userToView = user;
@@ -120,14 +121,12 @@ public class KeeperServer extends Server {
 
     private User getInfo(int id2){
         User userID2;
-        for (User user : wholeUserList) {
-            if(user.getId().equals(id2)){
-                userID2 = user;
-                return userID2;
-            }
-        }
         if(id2 == 0){
             return wholeUserList.stream().findFirst().orElse(null);
+        } else {
+            if(id2 < wholeUserList.size()){
+                return userID2 = wholeUserList.get(id2);
+            }
         }
         System.out.println("User with id: " + id2 + " do not exist");
         return null;

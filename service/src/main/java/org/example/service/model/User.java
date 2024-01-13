@@ -2,10 +2,13 @@ package org.example.service.model;
 
 import org.example.service.model.enums.Role;
 
+import java.util.UUID;
+
 public class User {
     private String host;
     private Integer port;
-    private Integer id = 0;
+    private UUID id = UUID.randomUUID();
+    private static int userCounter = 0;
     private Role role;
 
     public String getHost() {
@@ -24,11 +27,11 @@ public class User {
         this.port = port;
     }
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

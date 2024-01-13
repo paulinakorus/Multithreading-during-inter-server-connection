@@ -14,6 +14,7 @@ public class SellerGUI extends JFrame{
     private String host = "localhost";
     private SellerServer sellerServer = null;
     private KeeperClient keeperClient = new KeeperClientImpl(host, 2137);
+    private User user;
 
     private JPanel sellerPanel;
     private JLabel sellerLabel;
@@ -25,13 +26,14 @@ public class SellerGUI extends JFrame{
     private JLabel portLabel;
 
     public SellerGUI(){
-        this.setTitle("Keeper");                                     // set title of frame
+        this.setTitle("Seller");                                     // set title of frame
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);           // exit out off application
         this.setResizable(false);                                      // preventing frame from being resized
-        this.setSize(500, 500);                            // setting size
+        this.setSize(1100, 700);                            // setting size
         this.setVisible(true);                                         // making frame visible
-        this.add(sellerLabel);
+        this.add(sellerPanel);
 
+        hostTextField.setText(host);
         setUpButtons();
     }
 
@@ -40,15 +42,12 @@ public class SellerGUI extends JFrame{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 if(actionEvent.getSource() == registerButton){
-
                     if(sellerServer == null){
-                        User user = new User();
+                        user = new User();
                         user.setRole(Role.Seller);
-
                         user.setHost(host);
-                        hostTextField.setText(host);
-
                         user.setPort(Integer.valueOf(portTextField.getText()));
+
                         try {
                             keeperClient.register(user);
                         } catch (IOException e) {
@@ -63,6 +62,21 @@ public class SellerGUI extends JFrame{
                                 throw new RuntimeException(e);
                             }
                         });
+                        thread.start();
+                    }
+                }
+            }
+        });
+
+        unregisterButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                if(actionEvent.getSource() == unregisterButton){
+                    try {
+                        if(user != null)
+                            keeperClient.unregister(user.getId());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
                 }
             }

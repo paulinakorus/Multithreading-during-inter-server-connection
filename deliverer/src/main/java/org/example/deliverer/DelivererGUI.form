@@ -76,7 +76,7 @@
           <text value="Register"/>
         </properties>
       </component>
-      <component id="62b67" class="javax.swing.JButton" binding="uregisterButton" default-binding="true">
+      <component id="62b67" class="javax.swing.JButton" binding="unregisterButton" default-binding="true">
         <constraints>
           <grid row="2" column="3" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -84,7 +84,7 @@
           <background color="-11703683"/>
           <font name="Times New Roman" size="16" style="1"/>
           <foreground color="-65794"/>
-          <text value="Uregister"/>
+          <text value="Unregister"/>
         </properties>
       </component>
       <component id="67c0" class="javax.swing.JList" binding="orderList">

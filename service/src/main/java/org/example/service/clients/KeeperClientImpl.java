@@ -7,9 +7,10 @@ import org.example.service.model.enums.Method;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 public class KeeperClientImpl extends Client implements org.example.service.clientsInterfaces.KeeperClient {
-    private ObjectMapper objectMapper;
+    private ObjectMapper objectMapper = new ObjectMapper();
     private Payload payload = new Payload();
     private String data;
     private String payloadString;
@@ -29,7 +30,7 @@ public class KeeperClientImpl extends Client implements org.example.service.clie
         return user_result;
     }
 
-    public User unregister(Integer id) throws IOException {
+    public User unregister(UUID id) throws IOException {
         data = objectMapper.writeValueAsString(id);
         payload.setArgument(data);
         payload.setMethod(Method.Unregister);

@@ -9,7 +9,7 @@ import org.example.service.model.enums.Method;
 import java.io.IOException;
 
 public class SellerClientImpl extends Client implements org.example.service.clientsInterfaces.SellerClient {
-    private ObjectMapper objectMapper;
+    private ObjectMapper objectMapper = new ObjectMapper();
     private Payload payload = new Payload();
     private String data;
     private String payloadString;

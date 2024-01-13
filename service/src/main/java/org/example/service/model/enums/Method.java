@@ -5,10 +5,12 @@ import org.example.service.model.Product;
 import org.example.service.model.Receipt;
 import org.example.service.model.User;
 
+import java.util.UUID;
+
 public enum Method {
     Test(Product.class),
     Register(User.class),
-    Unregister(Integer.class),
+    Unregister(UUID.class),
     GetOrder(),
     ReturnOrder(Order.class),
     GetInfo(Integer.class),

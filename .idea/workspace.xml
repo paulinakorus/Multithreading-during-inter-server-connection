@@ -4,9 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e71a3d7c-4391-4995-8dbb-e24ef2ad2d90" name="Changes" comment="Some changes in Interfaces and connecting GUI">
-      <change beforePath="$PROJECT_DIR$/deliverer/src/main/java/org/example/deliverer/DeliverGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/deliverer/src/main/java/org/example/deliverer/DeliverGUI.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/deliverer/src/main/java/org/example/deliverer/DeliverGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/deliverer/src/main/java/org/example/deliverer/DeliverGUI.java" afterDir="false" />
+    <list default="true" id="e71a3d7c-4391-4995-8dbb-e24ef2ad2d90" name="Changes" comment="Finishing DelivererGUI">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/java/org/example/customer/CustomerGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/org/example/customer/CustomerGUI.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/java/org/example/customer/CustomerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/org/example/customer/CustomerGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deliverer/src/main/java/org/example/deliverer/DelivererGUI.form" beforeDir="false" afterPath="$PROJECT_DIR$/deliverer/src/main/java/org/example/deliverer/DelivererGUI.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/deliverer/src/main/java/org/example/deliverer/DelivererGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/deliverer/src/main/java/org/example/deliverer/DelivererGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/keeper/src/main/java/org/example/keeper/service/KeeperServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/keeper/src/main/java/org/example/keeper/service/KeeperServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/seller/src/main/java/org/example/seller/SellerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/seller/src/main/java/org/example/seller/SellerApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/seller/src/main/java/org/example/seller/SellerGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/seller/src/main/java/org/example/seller/SellerGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/seller/target/classes/org/example/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/seller/target/classes/org/example/seller/SellerClient.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/seller/target/classes/org/example/seller/SellerServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/seller/target/classes/org/example/seller/SellerServer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/org/example/service/clients/CustomerClientImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/org/example/service/clients/CustomerClientImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/org/example/service/clients/DelivererClientImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/org/example/service/clients/DelivererClientImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/org/example/service/clients/KeeperClientImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/org/example/service/clients/KeeperClientImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/org/example/service/clients/SellerClientImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/org/example/service/clients/SellerClientImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/org/example/service/clientsInterfaces/KeeperClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/org/example/service/clientsInterfaces/KeeperClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/org/example/service/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/org/example/service/model/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/org/example/service/model/enums/Method.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/org/example/service/model/enums/Method.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/target/classes/org/example/service/model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/classes/org/example/service/model/User.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +65,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/48572/Desktop/Lab06_dp",
+    "last_opened_file_path": "C:/Users/48572/Desktop/Lab06",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
@@ -134,7 +151,14 @@
       <option name="project" value="LOCAL" />
       <updated>1705153216819</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Finishing DelivererGUI">
+      <created>1705153363008</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1705153363008</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -146,6 +170,7 @@
     <MESSAGE value="Making CustomerGUI only view" />
     <MESSAGE value="Making clients interfaces and getting their instance" />
     <MESSAGE value="Some changes in Interfaces and connecting GUI" />
-    <option name="LAST_COMMIT_MESSAGE" value="Some changes in Interfaces and connecting GUI" />
+    <MESSAGE value="Finishing DelivererGUI" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finishing DelivererGUI" />
   </component>
 </project>
